@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+# Bloqueios recomendados (não obrigatórios)
+Disallow: /admin/
+Disallow: /private/
+Disallow: /tmp/
+Disallow: /backup/
+
+Sitemap: https://gameonline.com.br/sitemap.xml

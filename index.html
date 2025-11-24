@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>🎮 Games On-Line</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- 🔍 SEO Avançado -->
+  <meta name="description" content="Jogue online Pac-Man, Snake, Pong, Space Invaders e Tetris de graça! Jogos clássicos de arcade direto no seu navegador.">
+  <meta name="keywords" content="jogos online, pac-man, pong, tetris, snake, space invaders, jogos clássicos, arcade, games gratuitos">
+  <meta name="author" content="Games On-Line">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#0f0">
+
+  <!-- 🧭 Google Search Console (verificação) -->
+  <meta name="google-site-verification" content="SUA_CHAVE_DE_VERIFICACAO_AQUI" />
+
+  <!-- 📊 Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
+
+  <!-- 💡 Dados Estruturados (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Games On-Line",
+    "url": "https://seudominio.com",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://seudominio.com/?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    },
+    "description": "Jogue online Pac-Man, Snake, Pong, Space Invaders e Tetris de graça.",
+    "publisher": {
+      "@type": "Organization",
+      "name": "Games On-Line"
+    }
+  }
+  </script>
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6890693169488330" crossorigin="anonymous"></script>
+
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 0;
+      background: #111;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Cabeçalho fixo */
+    header {
+      background: #222;
+      text-align: center;
+      padding: 15px 10px;
+      font-size: 1.6em;
+      font-weight: bold;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+      flex-wrap: wrap;
+      border-bottom: 2px solid #0f0;
+      box-shadow: 0 0 20px rgba(0,255,0,0.3);
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+    }
+
+    header::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #0f0, transparent);
+      animation: neonLine 2s infinite linear;
+    }
+
+    @keyframes neonLine {
+      0% { transform: translateX(-100%); opacity: 0.3; }
+      50% { transform: translateX(0%); opacity: 1; }
+      100% { transform: translateX(100%); opacity: 0.3; }
+    }
+
+    header span.title {
+      color: #0f0;
+      text-shadow: 0 0 10px #0f0, 0 0 20px #0f0, 0 0 40px #0f0, 0 0 80px #0f0;
+      animation: pulseNeon 3s infinite ease-in-out;
+      letter-spacing: 1px;
+      user-select: none;
+    }
+
+    @keyframes pulseNeon {
+      0%, 100% {
+        text-shadow: 0 0 5px #0f0, 0 0 15px #0f0, 0 0 30px #0f0, 0 0 60px #0f0;
+        transform: scale(1);
+      }
+      50% {
+        text-shadow: 0 0 20px #0f0, 0 0 40px #0f0, 0 0 80px #0f0, 0 0 120px #0f0;
+        transform: scale(1.03);
+      }
+    }
+
+    .adsense-top, .adsense-box {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #000;
+      padding: 10px 0;
+      border-bottom: 2px solid #0f0;
+      opacity: 0;
+      animation: fadeIn 2s forwards;
+    }
+
+    @keyframes fadeIn { to { opacity: 1; } }
+
+    main {
+      flex: 1;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 25px;
+      padding: 120px 25px 80px; /* Espaço p/ header e footer fixos */
+      justify-items: center;
+      align-items: center;
+    }
+
+    .game-card {
+      background: #000;
+      border: 2px solid #0f0;
+      border-radius: 14px;
+      overflow: hidden;
+      width: 300px;
+      text-align: center;
+      box-shadow: 0 0 20px rgba(0,255,0,0.2);
+      transition: transform 0.3s ease, box-shadow 0.4s ease;
+      opacity: 0;
+      transform: translateY(30px) scale(0.95);
+      animation: appear 1s forwards;
+    }
+
+    @keyframes appear { to { opacity: 1; transform: translateY(0) scale(1); } }
+
+    .game-card:hover {
+      transform: scale(1.07);
+      box-shadow: 0 0 35px rgba(0,255,0,0.6);
+    }
+
+    .game-card img {
+      width:100%;height:150px;object-fit:contain;border-radius:8px;display:block;margin-bottom:10px
+    }
+
+    .game-card h2 {
+      margin: 10px 0 5px;
+      color: #0f0;
+      font-size: 1.3em;
+      text-shadow: 0 0 8px #0f0;
+    }
+
+    .game-card p {
+      font-size: 0.9em;
+      color: #aaa;
+      margin-bottom: 10px;
+      padding: 0 10px;
+    }
+
+    .game-card button {
+      background: #0f0;
+      border: none;
+      color: #000;
+      padding: 8px 14px;
+      margin-bottom: 15px;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+      font-size: 1em;
+    }
+
+    .game-card button:hover {
+      background: #3f3;
+      box-shadow: 0 0 10px #0f0;
+    }
+
+    .insert-coin {
+      color: #0f0;
+      font-family: "Press Start 2P", monospace;
+      font-size: 0.9em;
+      text-shadow: 0 0 5px #0f0, 0 0 15px #0f0;
+      animation: blinkCoin 1.2s infinite;
+      margin-bottom: 6px;
+    }
+
+    @keyframes blinkCoin {
+      0%, 50%, 100% { opacity: 1; }
+      25%, 75% { opacity: 0; }
+    }
+
+    /* Rodapé fixo */
+    footer {
+      background: #222;
+      text-align: center;
+      padding: 12px 8px;
+      font-size: 0.9em;
+      border-top: 2px solid #0f0;
+      box-shadow: 0 -2px 50px rgba(0,255,0,0.3);
+      display: flex;
+      flex-direction:row;
+      align-items: center;
+      gap: 6px;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      z-index: 100;
+      flex-shrink: 0;
+    }
+
+    button {
+      background: #0f0;
+      border: none;
+      border-radius: 6px;
+      padding: 6px 10px;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 1em;
+      transition: 0.3s;
+    }
+
+    button:hover { background: #3f3; }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <header>
+    <span class="title">🎮 Games On-Line</span>
+  </header>
+
+  <div class="adsense-top">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-6890693169488330"
+         data-ad-slot="9876543210"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+
+  <main>
+    <div class="game-card"><img src="image/pacman.png" alt="Pac-Man">
+      <h2>Pac-Man</h2>
+      <p>Coma todas as bolinhas e fuja dos fantasmas nesse clássico imortal!</p>
+      <button class="playBtn" data-game="pacman.html">▶ Jogar</button>
+      </div>
+
+    <div class="game-card">
+      <img src="image/pong.png" alt="Pong">
+      <h2>Pong</h2>
+      <p>O duelo de raquetes que iniciou a era dos videogames!</p>
+      <button class="playBtn" data-game="pong.html">▶ Jogar</button>
+    </div>
+
+    <div class="game-card">
+      <img src="image/snake.png" alt="Snake">
+      <h2>Snake</h2>
+      <p>Controle a cobra e colete pontos para evoluir e bater recordes!</p>
+      <button class="playBtn" data-game="snake.html">▶ Jogar</button>
+    </div>
+
+    <div class="game-card">
+      <img src="image/space_invaders.png" alt="Space Invaders">
+      <h2>Space Invaders</h2>
+      <p>Defenda a Terra dos alienígenas e ganhe pontos eliminando as naves!</p>
+      <button class="playBtn" data-game="space_invaders.html">▶ Jogar</button>
+    </div>
+
+    <div class="game-card">
+      <img src="image/tetris.png" alt="Tetris">
+      <h2>Tetris</h2>
+      <p>Empilhe as peças e forme linhas perfeitas neste clássico dos puzzles!</p>
+      <button class="playBtn" data-game="tetris.html">▶ Jogar</button>
+    </div>
+  </main>
+
+  <footer>
+    <div class="insert-coin">INSERT COIN</div>
+    © 2025 Games On-Line — Visitantes: <span id="visitors">0</span>
+    <div class="adsense-box">
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-6890693169488330"
+           data-ad-slot="1234567890"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
+  </footer>
+
+  <!-- Sons -->
+  <audio id="bgMusic" src="https://cdn.pixabay.com/download/audio/2021/09/15/audio_f1c8df4761.mp3?filename=arcade-game-ambience-9826.mp3" loop></audio>
+  <audio id="clickSound" src="https://actions.google.com/sounds/v1/cartoon/pop.ogg"></audio>
+  <audio id="hoverSound" src="https://actions.google.com/sounds/v1/cartoon/wood_plank_flicks.ogg"></audio>
+
+  <script>
+  const bgMusic = document.getElementById("bgMusic");
+  bgMusic.volume = 0.4;
+  bgMusic.play().catch(()=>{});
+
+  const clickSound = document.getElementById("clickSound");
+  const hoverSound = document.getElementById("hoverSound");
+  const playButtons = document.querySelectorAll(".playBtn");
+
+  const coinSound = new Audio("https://cdn.pixabay.com/download/audio/2022/03/15/audio_9a31bfc44a.mp3?filename=coin-insert-102134.mp3");
+  coinSound.volume = 0.5;
+
+  playButtons.forEach(btn => {
+    btn.addEventListener("mouseenter", () => {
+      hoverSound.currentTime = 0;
+      hoverSound.play();
+    });
+
+    btn.addEventListener("click", () => {
+      coinSound.currentTime = 0;
+      coinSound.play();
+      clickSound.currentTime = 0;
+      clickSound.play();
+      setTimeout(() => window.location.href = btn.dataset.game, 700);
+    });
+  });
+
+  const visitorsEl = document.getElementById("visitors");
+  let visits = localStorage.getItem("visits");
+  visits = visits ? parseInt(visits)+1 : 1;
+  localStorage.setItem("visits", visits);
+  visitorsEl.textContent = visits.toLocaleString("pt-BR");
+  </script>
+</body>
+</html>

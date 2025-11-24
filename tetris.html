@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Tetris Evolution – Jogue Online Grátis (2025)</title>
+
+  <!-- ✅ SEO AVANÇADO -->
+  <meta name="description" content="Tetris Evolution - Versão moderna do clássico Tetris com sons, ranking de recordes e suporte para PC e celular. Jogue grátis diretamente no navegador.">
+  <meta name="keywords" content="tetris, jogo tetris, tetris evolution, jogar tetris online, tetris grátis, jogos retro, jogos arcade, browser game, puzzle game">
+  <meta name="author" content="Games On-Line">
+
+  <!-- ✅ OPEN GRAPH / COMPARTILHAMENTO -->
+  <meta property="og:title" content="Tetris Evolution – Jogue Agora" />
+  <meta property="og:description" content="Jogue Tetris Evolution grátis diretamente no navegador. Ranking de recordes incluso!" />
+  <meta property="og:image" content="https://SEU_DOMINIO.com/imagens/tetris-card.png" />
+  <meta property="og:type" content="website" />
+
+  <!-- ✅ Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-6NMX3MDJVN"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-6NMX3MDJVN');
+  </script>
+
+  <!-- ✅ Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6890693169488330"
+    crossorigin="anonymous"></script>
+
+  <!-- ✅ STYLE ORIGINAL (NÃO ALTEREI NADA) -->
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #111;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+    }
+    header {
+      text-align: center;
+      padding: 5px;
+      font-size: 1.2em;
+      font-weight: bold;
+      background: #222;
+    }
+    #gameWrapper {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      background: rgb(39, 36, 39);
+    }
+    canvas {
+      display: block;
+      background: #000;
+    }
+    #overlay {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.8);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      text-align: center;
+    }
+    #overlay h1 {
+      font-size: 3em;
+      margin-bottom: 20px;
+      animation: glow 2s infinite alternate;
+    }
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #0ff, 0 0 20px #0ff; }
+      to { text-shadow: 0 0 20px #0ff, 0 0 40px #0ff; }
+    }
+    button {
+      background: #0ff;
+      border: none;
+      padding: 6px 14px;
+      font-size: 1em;
+      cursor: pointer;
+      border-radius: 6px;
+      margin: 5px;
+    }
+    #pauseOverlay {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      font-size: 2em;
+      font-weight: bold;
+      z-index: 9;
+    }
+    footer {
+      text-align: center;
+      padding: 5px;
+      font-size: 0.9em;
+      background: #222;
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ✅ RECORD ADICIONADO NO HEADER -->
+  <header>
+    Tetris Evolution – Pontos: <span id="score">0</span> |
+    Recorde: <span id="highscore">0</span>
+    <button id="musicBtn">🎵 Música</button>
+    <button id="fsBtn">⛶ Tela Cheia</button>
+    <button onclick="window.location.href='index.html'">🏠 Voltar</button>
+  </header>
+
+  <div id="gameWrapper">
+
+    <canvas id="gameCanvas"></canvas>
+    <canvas id="nextCanvas" width="96" height="96" style="position:absolute; top:10px; right:10px; background:#111; border:2px solid #0ff;"></canvas>
+
+
+    <div id="overlay">
+      <h1>🧱 Tetris Evolution</h1>
+      <button id="startBtn">▶ Iniciar Jogo</button>
+    </div>
+
+    <div id="pauseOverlay">⏸️ Jogo Pausado</div>
+  </div>
+
+  <footer>
+    <p>© 2025 Games On-Line. Todos os direitos reservados.</p>
+  </footer>
+
+  <!-- Sons -->
+  <audio id="lineSound" src="https://actions.google.com/sounds/v1/cartoon/clang_and_wobble.ogg"></audio>
+  <audio id="dieSound" src="https://actions.google.com/sounds/v1/cartoon/cartoon_boing.ogg"></audio>
+  <audio id="bgMusic" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" loop></audio>
+
+  <script>
+  const canvas = document.getElementById("gameCanvas");
+  const ctx = canvas.getContext("2d");
+  const nextCanvas = document.getElementById("nextCanvas");
+  const nextCtx = nextCanvas.getContext("2d");
+
+  const startBtn = document.getElementById("startBtn");
+  const overlay = document.getElementById("overlay");
+  const pauseOverlay = document.getElementById("pauseOverlay");
+  const scoreEl = document.getElementById("score");
+  const musicBtn = document.getElementById("musicBtn");
+  const fsBtn = document.getElementById("fsBtn");
+
+  const lineSound = document.getElementById("lineSound");
+  const dieSound = document.getElementById("dieSound");
+  const bgMusic = document.getElementById("bgMusic");
+
+ /* Recorde localStorage — versão corrigida */
+let highscore = parseInt(localStorage.getItem("tetrisHighscore"), 10);
+if (!Number.isFinite(highscore)) highscore = 0;
+
+let highscoreEl = document.getElementById("highscore");
+if (!highscoreEl) {
+  // cria span e insere no header sem usar innerHTML (não quebra botões/eventos)
+  highscoreEl = document.createElement("span");
+  highscoreEl.id = "highscore";
+  highscoreEl.textContent = highscore;
+
+  const header = document.querySelector("header");
+  const firstBtn = header.querySelector("button"); // para inserir antes dos botões
+
+  const textNode = document.createTextNode(" | Recorde: ");
+  if (firstBtn) {
+    header.insertBefore(textNode, firstBtn);
+    header.insertBefore(highscoreEl, firstBtn);
+  } else {
+    header.appendChild(textNode);
+    header.appendChild(highscoreEl);
+  }
+} else {
+  // atualiza o texto do elemento já existente
+  highscoreEl.textContent = highscore;
+}
+
+
+  const COLS = 10, ROWS = 20, BLOCK = 24;
+  canvas.width = COLS * BLOCK;
+  canvas.height = ROWS * BLOCK;
+
+  const COLORS = ["cyan","blue","orange","yellow","green","purple","red"];
+  const SHAPES = [
+    [[1,1,1,1]],
+    [[2,2,2],[0,0,2]],
+    [[3,3,3],[3,0,0]],
+    [[4,4],[4,4]],
+    [[0,5,5],[5,5,0]],
+    [[0,6,0],[6,6,6]],
+    [[7,7,0],[0,7,7]]
+  ];
+
+  let board, piece, nextPiece, score = 0, gameInterval;
+  let paused = false;
+  let dropSpeed = 500;
+  let fastDrop = false;
+
+  function resetBoard() {
+    board = Array.from({length: ROWS},()=>Array(COLS).fill(0));
+  }
+
+  function drawBoard() {
+    ctx.fillStyle = "#000";
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+
+    for(let r=0;r<ROWS;r++){
+      for(let c=0;c<COLS;c++){
+        if(board[r][c]) {
+          ctx.fillStyle = COLORS[board[r][c]-1];
+          ctx.fillRect(c*BLOCK,r*BLOCK,BLOCK,BLOCK);
+          ctx.strokeStyle="#111";
+          ctx.strokeRect(c*BLOCK,r*BLOCK,BLOCK,BLOCK);
+        }
+      }
+    }
+  }
+
+  /* NOVO: gera peça aleatória */
+  function getRandomPiece(){
+    const id = Math.floor(Math.random()*SHAPES.length);
+    return {
+      shape: SHAPES[id],
+      color: COLORS[id],
+      x: Math.floor(COLS/2)-1,
+      y: 0
+    };
+  }
+
+  /* NOVO: desenha no canvas do "próximo bloco" */
+  function drawNextPiece(){
+    nextCtx.clearRect(0,0,nextCanvas.width,nextCanvas.height);
+    nextPiece.shape.forEach((row,y)=>{
+      row.forEach((val,x)=>{
+        if(val){
+          nextCtx.fillStyle = nextPiece.color;
+          nextCtx.fillRect(x*20 + 20, y*20 + 20, 20, 20);
+          nextCtx.strokeStyle="#000";
+          nextCtx.strokeRect(x*20 + 20, y*20 + 20, 20, 20);
+        }
+      });
+    });
+  }
+
+  function newPiece() {
+    if(!nextPiece) nextPiece = getRandomPiece();
+    piece = nextPiece;
+    nextPiece = getRandomPiece();
+    drawNextPiece();
+  }
+
+  function drawPiece() {
+    piece.shape.forEach((row,y)=>{
+      row.forEach((val,x)=>{
+        if(val){
+          ctx.fillStyle = piece.color;
+          ctx.fillRect((piece.x+x)*BLOCK,(piece.y+y)*BLOCK,BLOCK,BLOCK);
+          ctx.strokeStyle="#111";
+          ctx.strokeRect((piece.x+x)*BLOCK,(piece.y+y)*BLOCK,BLOCK,BLOCK);
+        }
+      });
+    });
+  }
+
+  function collides(x,y,shape){
+    for(let r=0;r<shape.length;r++){
+      for(let c=0;c<shape[r].length;c++){
+        if(shape[r][c]){
+          const nx = piece.x+c+x;
+          const ny = piece.y+r+y;
+          if(nx<0||nx>=COLS||ny>=ROWS||board[ny]?.[nx]) return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  function merge(){
+   piece.shape.forEach((row,y)=>{
+      row.forEach((val,x)=>{
+        if(val){
+          board[piece.y+y][piece.x+x] = COLORS.indexOf(piece.color)+1;
+        }
+      });
+    });
+  }
+
+  function clearLines(){
+    for(let r=ROWS-1;r>=0;r--){
+      if(board[r].every(v=>v)){
+        board.splice(r,1);
+        board.unshift(Array(COLS).fill(0));
+        score+=100;
+        updateScore();
+        lineSound.play();
+        r++;
+      }
+    }
+  }
+
+  function updateScore(){
+    scoreEl.textContent = score;
+    if(score > highscore){
+      highscore = score;
+      highscoreEl.textContent = score;
+      localStorage.setItem("tetrisHighscore", highscore);
+    }
+  }
+
+  function drop(){
+    if(!collides(0,1,piece.shape)){
+      piece.y++;
+    } else {
+      merge();
+      clearLines();
+      newPiece();
+
+      if(collides(0,0,piece.shape)){
+        dieSound.play();
+        overlay.innerHTML = `<h1>Game Over</h1><button onclick="restart()">🔄 Reiniciar</button>`;
+        overlay.style.display = "flex";
+        clearInterval(gameInterval);
+      }
+    }
+  }
+
+  function update(){
+    if (!paused){
+      drop();
+      drawBoard();
+      drawPiece();
+    }
+  }
+
+  function restart(){
+    score = 0;
+    updateScore();
+    resetBoard();
+    nextPiece = getRandomPiece();
+    newPiece();
+    overlay.style.display = "none";
+    gameInterval = setInterval(update, dropSpeed);
+  }
+
+  startBtn.onclick = ()=>{
+    restart();
+    bgMusic.play();
+  }
+
+  musicBtn.onclick = ()=> bgMusic.paused ? bgMusic.play() : bgMusic.pause();
+
+  fsBtn.onclick = ()=>{
+    if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+    else document.exitFullscreen();
+  }
+
+  document.addEventListener("keydown",e=>{
+    if(e.key==="ArrowLeft"&&!collides(-1,0,piece.shape)) piece.x--;
+    if(e.key==="ArrowRight"&&!collides(1,0,piece.shape)) piece.x++;
+    if(e.key==="ArrowDown") fastDrop = true;
+    if(e.key==="ArrowUp"){
+      const rotated = piece.shape[0].map((_,i)=> piece.shape.map(r=>r[i]).reverse());
+      if(!collides(0,0,rotated)) piece.shape = rotated;
+    }
+  });
+
+  document.addEventListener("keyup", e=>{
+    if(e.key==="ArrowDown") fastDrop = false;
+  });
+
+  setInterval(()=>{ if(fastDrop) drop(); }, 60);
+
+  resetBoard();
+
+/* Botões MOBILE — sem alterar style */
+function isMobile(){
+  return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+}
+
+if(isMobile()){
+  const controls = document.createElement("div");
+  controls.style.position = "absolute";
+  controls.style.bottom = "10px";
+  controls.style.width = "100%";
+  controls.style.display = "flex";
+  controls.style.justifyContent = "space-around";
+
+  controls.innerHTML = `
+  <button style="font-size: 32px; font-weight: bold;" onclick="if(!collides(-1,0,piece.shape)) piece.x--;">⬅</button>
+
+  <button style="font-size: 32px; font-weight: bold;" onclick="if(!collides(1,0,piece.shape)) piece.x++;">➡</button>
+
+  <button 
+    style="font-size: 32px; font-weight: bold;"
+    onmousedown="fastDrop=true"
+    onmouseup="fastDrop=false"
+    ontouchstart="fastDrop=true"
+    ontouchend="fastDrop=false"
+  >⬇</button>
+
+  <button style="font-size: 32px; font-weight: bold;"
+    onclick="
+      const r = piece.shape[0].map((_,i)=> piece.shape.map(r=>r[i]).reverse());
+      if(!collides(0,0,r)) piece.shape = r;
+    "
+  >⟳</button>
+`;
+  document.getElementById("gameWrapper").appendChild(controls);
+}
+</script>
+</body>
+</html>
+
+
+
