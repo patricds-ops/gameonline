@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Flappy Bird Evolution – Jogue Online Grátis (2025)</title>
+
+  <!-- ✅ SEO AVANÇADO -->
+<title>Flappy Bird Evolution 🐦 | Jogue Online Grátis – Games On-Line</title>
+<meta name="description" content="Flappy Bird Evolution – A versão aprimorada do clássico Flappy Bird! Gráficos modernos, física suave, recordes e desafio progressivo. Jogue grátis direto no navegador.">
+<meta name="keywords" content="flappy bird, flappy bird online, flappy bird grátis, flappy bird evolution, jogo flappy bird, jogos online, arcade, browser game">
+<meta name="author" content="Games On-Line">
+<meta name="robots" content="index, follow">
+<meta name="language" content="pt-BR">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Canonical -->
+<link rel="canonical" href="https://gameonline.com/flappy-bird-evolution.html">
+
+<!-- ✅ SEO – Open Graph -->
+<meta property="og:title" content="Flappy Bird Evolution 🐦 | Jogue Online Grátis">
+<meta property="og:description" content="A evolução moderna do clássico Flappy Bird com física fluida, efeitos, sons e ranking de recordes.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://gameonline.com/flappy-bird-evolution.html">
+<meta property="og:image" content="https://gameonline.com/imagens/flappy-banner.png">
+
+<!-- ✅ SEO – Twitter Cards -->
+<meta name="twitter:title" content="Flappy Bird Evolution 🐦 | Jogue Online Grátis">
+<meta name="twitter:description" content="Desafie seus reflexos no Flappy Bird Evolution — jogabilidade suave e ranking de recordes!">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://gameonline.com/imagens/flappy-banner.png">
+
+<!-- ✅ Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-6NMX3MDJVN"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-6NMX3MDJVN');
+</script>
+
+<!-- ✅ Google Adsense -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6890693169488330"
+crossorigin="anonymous"></script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9483391329669995"
+crossorigin="anonymous"></script>
+
+
+  <!-- ✅ STYLE ORIGINAL (NÃO ALTEREI NADA) -->
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #111;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+    }
+    header {
+      text-align: center;
+      padding: 5px;
+      font-size: 1.2em;
+      font-weight: bold;
+      background: #222;
+    }
+    #gameWrapper {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      background: rgb(39, 36, 39);
+    }
+    canvas {
+      display: block;
+      background: #000;
+    }
+    #overlay {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.8);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      text-align: center;
+    }
+    #overlay h1 {
+      font-size: 3em;
+      margin-bottom: 20px;
+      animation: glow 2s infinite alternate;
+    }
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #0ff, 0 0 20px #0ff; }
+      to { text-shadow: 0 0 20px #0ff, 0 0 40px #0ff; }
+    }
+    button {
+      background: #0ff;
+      border: none;
+      padding: 6px 14px;
+      font-size: 1em;
+      cursor: pointer;
+      border-radius: 6px;
+      margin: 5px;
+    }
+    #pauseOverlay {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      font-size: 2em;
+      font-weight: bold;
+      z-index: 9;
+    }
+    footer {
+      text-align: center;
+      padding: 5px;
+      font-size: 0.9em;
+      background: #222;
+      flex-shrink: 0;
+    }
+
+/* 📌 Ajustes automáticos para MOBILE */
+@media (max-width: 768px) {
+
+  header {
+    font-size: 0.9em;
+    padding: 4px;
+  }
+
+  header button {
+    padding: 4px 8px;
+    font-size: 0.8em;
+  }
+
+  #adBanner {
+    width: 100% !important;
+    left: 0 !important;
+    top: auto !important;
+    bottom: 5px !important;
+    display: flex;
+    justify-content: center;
+    z-index: 30;
+  }
+
+  #nextCanvas {
+    display: none !important; /* Não usado no Flappy, escondo no mobile */
+  }
+
+  #overlay h1 {
+    font-size: 2.4em !important;
+  }
+}
+
+/* 📌 Ajustes específicos para TELA GRANDE (PC/Notebook) */
+@media (min-width: 769px) {
+  #adBanner {
+    width: 320px !important;
+    top: 10px !important;
+    left: 10px !important;
+  }
+
+  #nextCanvas {
+    display: block !important;
+  }
+
+  #overlay h1 {
+    font-size: 3em;
+  }
+}
+  </style>
+</head>
+
+<body>
+
+  <!-- ✅ RECORD ADICIONADO NO HEADER -->
+  <header>
+    Flappy Bird Evolution – Pontos: <span id="score">0</span> |
+    Recorde: <span id="highscore">0</span>
+    <button id="musicBtn">🎵 Música</button>
+    <button id="fsBtn">⛶ Tela Cheia</button>
+    <button onclick="window.location.href='index.html'">🏠 Voltar</button>
+  </header>
+
+  <div id="gameWrapper">
+
+    <canvas id="gameCanvas"></canvas>
+    <div id="adBanner" style="position:absolute; top:10px; left:10px; width:320px; z-index:20;">
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-6890693169488330"
+       data-ad-slot="1234567890"
+       data-ad-format="auto"
+       data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+
+    <canvas id="nextCanvas" width="96" height="96" style="position:absolute; top:10px; right:10px; background:#111; border:2px solid #0ff;"></canvas>
+
+
+    <div id="overlay">
+      <h1>🐦 Flappy Bird Evolution</h1>
+      <button id="startBtn">▶ Iniciar Jogo</button>
+    </div>
+
+    <div id="pauseOverlay">⏸️ Jogo Pausado</div>
+  </div>
+
+  <footer>
+    <p>© 2025 Games On-Line. Todos os direitos reservados.</p>
+  </footer>
+
+  <!-- Sons -->
+  <audio id="lineSound" src="https://actions.google.com/sounds/v1/cartoon/clang_and_wobble.ogg"></audio>
+  <audio id="dieSound" src="https://actions.google.com/sounds/v1/cartoon/cartoon_boing.ogg"></audio>
+  <audio id="bgMusic" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" loop></audio>
+
+  <script>
+/* --- FLAPPY BIRD (script para colar dentro do seu HTML fornecido) --- */
+/* Mantive ids existentes: #gameCanvas, #nextCanvas (não usado para Flappy), #overlay, #startBtn, #pauseOverlay,
+   #score, #highscore, #musicBtn, #fsBtn, #bgMusic (já declarado no HTML). */
+
+(function() {
+  // --- Configurações ---
+  const canvas = document.getElementById('gameCanvas');
+  const wrapper = document.getElementById('gameWrapper');
+  const overlay = document.getElementById('overlay');
+  const startBtn = document.getElementById('startBtn');
+  const pauseOverlay = document.getElementById('pauseOverlay');
+  const scoreEl = document.getElementById('score');
+  const highscoreEl = document.getElementById('highscore');
+  const musicBtn = document.getElementById('musicBtn');
+  const fsBtn = document.getElementById('fsBtn');
+  const bgMusic = document.getElementById('bgMusic');
+
+  // LocalStorage key (separado para evitar conflito com Tetris)
+  const STORAGE_KEY = 'flappyHighscore_v1';
+
+  // Sounds (criados aqui para não alterar o HTML)
+  const wingSound = new Audio('https://actions.google.com/sounds/v1/foley/wood_plank_flicks.ogg');
+  const pointSound = new Audio('https://actions.google.com/sounds/v1/cartoon/clang_and_wobble.ogg');
+  const hitSound = new Audio('https://actions.google.com/sounds/v1/cartoon/cartoon_boing.ogg');
+
+  // Ajuste de devicePixelRatio para canvas nítido
+  function resizeCanvas() {
+    const rect = wrapper.getBoundingClientRect();
+    const dpr = Math.max(1, window.devicePixelRatio || 1);
+    canvas.width = Math.floor(rect.width * dpr);
+    canvas.height = Math.floor((rect.height - 0) * dpr);
+    canvas.style.width = rect.width + 'px';
+    canvas.style.height = rect.height + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  // Inicializa contexto
+  const ctx = canvas.getContext('2d');
+
+  // Game state
+  let state = 'menu'; // 'menu' | 'playing' | 'paused' | 'gameover'
+  let lastTime = 0;
+  let spawnTimer = 0;
+  let pipes = [];
+  let score = 0;
+  let highscore = parseInt(localStorage.getItem(STORAGE_KEY) || '0', 10);
+
+  // Bird
+  const bird = {
+    x: 80,
+    y: 150,
+    radius: 14,
+    vel: 0,
+    gravity: 0.55,
+    jumpForce: -9,
+    rotation: 0
+  };
+
+  // Pipes config
+  const pipeWidth = 60;
+  const pipeGap = 140; // espaço entre canos (pode ajustar)
+  const pipeSpacing = 1400; // distância em ms para spawnar
+  const pipeSpeed = 2.6;
+
+  // Responsividade inicial
+  function initPositioning() {
+    // Ajusta bird.y inicial com base no tamanho do canvas
+    const h = canvas.height / (window.devicePixelRatio || 1);
+    bird.y = Math.max(60, h / 2 - 20);
+  }
+
+  // Atualiza highscore exibido
+  function updateHighscoreDisplay() {
+    highscoreEl.textContent = highscore;
+  }
+  updateHighscoreDisplay();
+
+  // Reinicia jogo
+  function resetGame() {
+    pipes = [];
+    score = 0;
+    scoreEl.textContent = score;
+    bird.x = 80;
+    initPositioning();
+    bird.vel = 0;
+    bird.rotation = 0;
+    spawnTimer = 0;
+  }
+
+  // Cria um cano
+  function createPipe() {
+    const h = canvas.height / (window.devicePixelRatio || 1);
+    const minTop = 40;
+    const maxTop = Math.max(80, h - pipeGap - 80);
+    const topHeight = Math.floor(Math.random() * (maxTop - minTop)) + minTop;
+    const pipe = {
+      x: (canvas.width / (window.devicePixelRatio || 1)) + 10,
+      top: topHeight,
+      bottom: topHeight + pipeGap,
+      width: pipeWidth,
+      passed: false
+    };
+    pipes.push(pipe);
+  }
+
+  // Input: jump
+  function jump() {
+    if (state === 'menu') {
+      startGame();
+      return;
+    }
+    if (state === 'playing') {
+      bird.vel = bird.jumpForce;
+      wingSound.currentTime = 0;
+      wingSound.play().catch(()=>{});
+    } else if (state === 'gameover') {
+      // restart from gameover to menu
+      state = 'menu';
+      overlay.style.display = 'flex';
+      overlay.querySelector('h1').textContent = '🕹️ Flappy Bird';
+      startBtn.textContent = '▶ Recomeçar';
+    }
+  }
+
+  // Start game
+  function startGame() {
+    overlay.style.display = 'none';
+    state = 'playing';
+    resetGame();
+    lastTime = performance.now();
+    requestAnimationFrame(loop);
+  }
+
+  // Fullscreen
+  fsBtn.addEventListener('click', () => {
+    if (!document.fullscreenElement) {
+      wrapper.requestFullscreen?.();
+    } else {
+      document.exitFullscreen?.();
+    }
+  });
+
+  // Music play/pause (usa bgMusic já no HTML)
+  let musicPlaying = false;
+  musicBtn.addEventListener('click', () => {
+    if (musicPlaying) {
+      bgMusic.pause();
+      musicBtn.textContent = '🎵 Música';
+    } else {
+      bgMusic.play().catch(()=>{});
+      musicBtn.textContent = '🔇 Mudo';
+    }
+    musicPlaying = !musicPlaying;
+  });
+
+  // Pause toggle (tecla P)
+  function togglePause() {
+    if (state === 'playing') {
+      state = 'paused';
+      pauseOverlay.style.display = 'flex';
+    } else if (state === 'paused') {
+      state = 'playing';
+      pauseOverlay.style.display = 'none';
+      lastTime = performance.now();
+      requestAnimationFrame(loop);
+    }
+  }
+
+  // Collision detection
+  function checkCollision(pipe) {
+    // bird is circle; pipes are rectangles
+    const bx = bird.x;
+    const by = bird.y;
+    const r = bird.radius;
+    // top pipe rect: x->x+width, y->0..pipe.top
+    if (bx + r > pipe.x && bx - r < pipe.x + pipe.width) {
+      if (by - r < pipe.top || by + r > pipe.bottom) {
+        return true;
+      }
+    }
+    // ground/ceiling
+    const h = canvas.height / (window.devicePixelRatio || 1);
+    if (by + r >= h || by - r <= 0) return true;
+    return false;
+  }
+
+  // Game loop
+  function loop(timestamp) {
+    if (state !== 'playing') return;
+    const dt = Math.min(40, timestamp - lastTime); // clamp delta
+    lastTime = timestamp;
+
+    // Physics
+    bird.vel += bird.gravity * (dt / 16.666); // scale by frame delta
+    bird.y += bird.vel * (dt / 16.666);
+    bird.rotation = Math.max(-0.6, Math.min(1.2, bird.vel / 12));
+
+    // Spawn pipes
+    spawnTimer += dt;
+    if (spawnTimer > pipeSpacing / (1 + (pipeSpeed - 2.6) * 200)) {
+      createPipe();
+      spawnTimer = 0;
+    }
+
+    // Move pipes
+    for (let i = pipes.length - 1; i >= 0; i--) {
+      const p = pipes[i];
+      p.x -= pipeSpeed * (dt / 16.666);
+      // scoring
+      if (!p.passed && p.x + p.width < bird.x) {
+        p.passed = true;
+        score += 1;
+        scoreEl.textContent = score;
+        pointSound.currentTime = 0;
+        pointSound.play().catch(()=>{});
+        if (score > highscore) {
+          highscore = score;
+          localStorage.setItem(STORAGE_KEY, String(highscore));
+          updateHighscoreDisplay();
+        }
+      }
+      // remove offscreen
+      if (p.x + p.width < -50) {
+        pipes.splice(i, 1);
+      }
+      // collision
+      if (checkCollision(p)) {
+        // hit!
+        hitSound.currentTime = 0;
+        hitSound.play().catch(()=>{});
+        state = 'gameover';
+        overlay.style.display = 'flex';
+        overlay.querySelector('h1').textContent = '💥 Game Over';
+        startBtn.textContent = '▶ Jogar Novamente';
+        break;
+      }
+    }
+
+    // ground collision (if out of bounds)
+    const h = canvas.height / (window.devicePixelRatio || 1);
+    if (bird.y + bird.radius >= h) {
+      // ensure show game over
+      hitSound.currentTime = 0;
+      hitSound.play().catch(()=>{});
+      state = 'gameover';
+      overlay.style.display = 'flex';
+      overlay.querySelector('h1').textContent = '💥 Game Over';
+      startBtn.textContent = '▶ Jogar Novamente';
+    }
+
+    // Draw
+    draw();
+
+    // next frame
+    if (state === 'playing') {
+      requestAnimationFrame(loop);
+    }
+  }
+
+  // Draw everything
+  function draw() {
+    const w = canvas.width / (window.devicePixelRatio || 1);
+    const h = canvas.height / (window.devicePixelRatio || 1);
+
+    // clear
+    ctx.clearRect(0, 0, w, h);
+
+    // background (subtle)
+    ctx.fillStyle = '#000';
+    ctx.fillRect(0, 0, w, h);
+
+    // ground (faint line)
+    ctx.fillStyle = '#111';
+    ctx.fillRect(0, h - 48, w, 48);
+
+    // pipes
+    for (let p of pipes) {
+      // top pipe
+      ctx.fillStyle = '#2ecc71';
+      ctx.fillRect(p.x, 0, p.width, p.top);
+      // bottom pipe
+      ctx.fillRect(p.x, p.bottom, p.width, h - p.bottom - 48);
+      // pipe rim (darker)
+      ctx.fillStyle = '#1e8449';
+      ctx.fillRect(p.x, p.top - 10, p.width, 10);
+      ctx.fillRect(p.x, p.bottom, p.width, 10);
+    }
+
+    // bird (circle with eye)
+    ctx.save();
+    ctx.translate(bird.x, bird.y);
+    ctx.rotate(bird.rotation);
+    // body
+    ctx.fillStyle = '#ffd54f';
+    ctx.beginPath();
+    ctx.arc(0, 0, bird.radius, 0, Math.PI * 2);
+    ctx.fill();
+    // wing (simple)
+    ctx.fillStyle = '#ffb300';
+    ctx.fillRect(-6, 2, 12, 4);
+    // eye
+    ctx.fillStyle = '#000';
+    ctx.beginPath();
+    ctx.arc(6, -3, 2.5, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+
+    // score (big center top)
+    ctx.font = 'bold 28px Arial';
+    ctx.textAlign = 'center';
+    ctx.fillStyle = '#0ff';
+    ctx.fillText(score, w / 2, 40);
+
+    // show highscore small
+    ctx.font = '14px Arial';
+    ctx.fillStyle = '#aaa';
+    ctx.fillText('Recorde: ' + highscore, w - 80, 26);
+  }
+
+  // Input handlers
+  window.addEventListener('keydown', (e) => {
+    if (e.code === 'Space' || e.code === 'ArrowUp') {
+      e.preventDefault();
+      jump();
+    } else if (e.code === 'KeyP') {
+      togglePause();
+    } else if (e.code === 'KeyM') {
+      // M toggles music
+      musicBtn.click();
+    }
+  });
+
+  // Mouse / touch
+  window.addEventListener('mousedown', (e) => {
+    // ignore clicks on buttons (header)
+    const target = e.target;
+    if (target && (target.tagName === 'BUTTON' || target.closest('button'))) return;
+    jump();
+  });
+  window.addEventListener('touchstart', (e) => {
+    const target = e.target;
+    if (target && (target.tagName === 'BUTTON' || target.closest('button'))) return;
+    jump();
+  }, {passive: true});
+
+  // Start button in overlay
+  startBtn.addEventListener('click', () => {
+    if (state === 'menu' || state === 'gameover') {
+      startGame();
+    } else if (state === 'playing') {
+      // do nothing
+    }
+  });
+
+  // Resize handling
+  window.addEventListener('resize', () => {
+    resizeCanvas();
+    initPositioning();
+    draw();
+  });
+
+  // Initial setup
+  function boot() {
+    // set canvas size to wrapper
+    resizeCanvas();
+    initPositioning();
+    resetGame();
+    // show overlay menu text
+    overlay.style.display = 'flex';
+    overlay.querySelector('h1').textContent = '🕹️ Flappy Bird';
+    startBtn.textContent = '▶ Iniciar Jogo';
+    // show highscore in header
+    updateHighscoreDisplay();
+    // initial draw
+    draw();
+  }
+
+  // Ensure the page doesn't scroll on touch while playing
+  document.body.addEventListener('touchmove', function(e) {
+    if (state === 'playing') e.preventDefault();
+  }, {passive: false});
+
+  // Prevent context menu on long press (mobile)
+  window.addEventListener('contextmenu', (e) => {
+    e.preventDefault();
+  });
+
+  // Boot the game
+  boot();
+
+  // Expose some debug in console (optional)
+  window.__flappy = {
+    reset: resetGame,
+    start: startGame,
+    stop: () => { state = 'gameover'; },
+    getState: () => state
+  };
+
+})();
+
+(function() {
+  const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
+  const banner = document.getElementById("adBanner");
+  const nextCanvas = document.getElementById("nextCanvas");
+
+  if (isMobile) {
+    banner.style.top = "auto";
+    banner.style.bottom = "5px";
+    banner.style.left = "0";
+    banner.style.width = "100%";
+    nextCanvas.style.display = "none";
+  } else {
+    banner.style.top = "10px";
+    banner.style.left = "10px";
+    banner.style.bottom = "auto";
+    banner.style.width = "320px";
+    nextCanvas.style.display = "block";
+  }
+})();
+</script>
+</body>
+</html>
