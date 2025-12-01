@@ -197,14 +197,12 @@ crossorigin="anonymous"></script>
     <div id="adBanner" style="position:absolute; top:10px; left:10px; width:320px; z-index:20;">
   <ins class="adsbygoogle"
        style="display:block"
-       data-ad-client="ca-pub-6890693169488330"
+       data-ad-client="ca-pub-9483391329669995"
        data-ad-slot="1234567890"
        data-ad-format="auto"
        data-full-width-responsive="true"></ins>
   <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
 </div>
-
-    <canvas id="nextCanvas" width="96" height="96" style="position:absolute; top:10px; right:10px; background:#111; border:2px solid #0ff;"></canvas>
 
 
     <div id="overlay">
@@ -224,10 +222,8 @@ crossorigin="anonymous"></script>
   <audio id="dieSound" src="https://actions.google.com/sounds/v1/cartoon/cartoon_boing.ogg"></audio>
   <audio id="bgMusic" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" loop></audio>
 
-  <script>
-/* --- FLAPPY BIRD (script para colar dentro do seu HTML fornecido) --- */
-/* Mantive ids existentes: #gameCanvas, #nextCanvas (não usado para Flappy), #overlay, #startBtn, #pauseOverlay,
-   #score, #highscore, #musicBtn, #fsBtn, #bgMusic (já declarado no HTML). */
+<script>
+/* --- FLAPPY BIRD ATUALIZADO COM CICLO DIA/NOITE E FUNDO COLORIDO --- */
 
 (function() {
   // --- Configurações ---
@@ -242,35 +238,37 @@ crossorigin="anonymous"></script>
   const fsBtn = document.getElementById('fsBtn');
   const bgMusic = document.getElementById('bgMusic');
 
-  // LocalStorage key (separado para evitar conflito com Tetris)
+  // LocalStorage
   const STORAGE_KEY = 'flappyHighscore_v1';
 
-  // Sounds (criados aqui para não alterar o HTML)
+  // Sounds
   const wingSound = new Audio('https://actions.google.com/sounds/v1/foley/wood_plank_flicks.ogg');
   const pointSound = new Audio('https://actions.google.com/sounds/v1/cartoon/clang_and_wobble.ogg');
   const hitSound = new Audio('https://actions.google.com/sounds/v1/cartoon/cartoon_boing.ogg');
 
-  // Ajuste de devicePixelRatio para canvas nítido
+  // DPI fix
+  const ctx = canvas.getContext('2d');
   function resizeCanvas() {
     const rect = wrapper.getBoundingClientRect();
     const dpr = Math.max(1, window.devicePixelRatio || 1);
     canvas.width = Math.floor(rect.width * dpr);
-    canvas.height = Math.floor((rect.height - 0) * dpr);
+    canvas.height = Math.floor(rect.height * dpr);
     canvas.style.width = rect.width + 'px';
     canvas.style.height = rect.height + 'px';
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   }
 
-  // Inicializa contexto
-  const ctx = canvas.getContext('2d');
-
   // Game state
-  let state = 'menu'; // 'menu' | 'playing' | 'paused' | 'gameover'
+  let state = 'menu';
   let lastTime = 0;
   let spawnTimer = 0;
   let pipes = [];
   let score = 0;
   let highscore = parseInt(localStorage.getItem(STORAGE_KEY) || '0', 10);
+
+  // Fundo dinâmico (ciclo de 0 a 1)
+  let timeCycle = 0;  
+  const cycleSpeed = 0.00006; // velocidade do ciclo dia/noite
 
   // Bird
   const bird = {
@@ -283,26 +281,23 @@ crossorigin="anonymous"></script>
     rotation: 0
   };
 
-  // Pipes config
+  // Pipes
   const pipeWidth = 60;
-  const pipeGap = 140; // espaço entre canos (pode ajustar)
-  const pipeSpacing = 1400; // distância em ms para spawnar
+  const pipeGap = 140;
+  const pipeSpacing = 1400;
   const pipeSpeed = 2.6;
 
-  // Responsividade inicial
   function initPositioning() {
-    // Ajusta bird.y inicial com base no tamanho do canvas
     const h = canvas.height / (window.devicePixelRatio || 1);
     bird.y = Math.max(60, h / 2 - 20);
   }
 
-  // Atualiza highscore exibido
   function updateHighscoreDisplay() {
     highscoreEl.textContent = highscore;
   }
+
   updateHighscoreDisplay();
 
-  // Reinicia jogo
   function resetGame() {
     pipes = [];
     score = 0;
@@ -314,12 +309,13 @@ crossorigin="anonymous"></script>
     spawnTimer = 0;
   }
 
-  // Cria um cano
+  // Criar cano
   function createPipe() {
     const h = canvas.height / (window.devicePixelRatio || 1);
     const minTop = 40;
     const maxTop = Math.max(80, h - pipeGap - 80);
     const topHeight = Math.floor(Math.random() * (maxTop - minTop)) + minTop;
+
     const pipe = {
       x: (canvas.width / (window.devicePixelRatio || 1)) + 10,
       top: topHeight,
@@ -327,10 +323,11 @@ crossorigin="anonymous"></script>
       width: pipeWidth,
       passed: false
     };
+
     pipes.push(pipe);
   }
 
-  // Input: jump
+  // Jump
   function jump() {
     if (state === 'menu') {
       startGame();
@@ -339,9 +336,8 @@ crossorigin="anonymous"></script>
     if (state === 'playing') {
       bird.vel = bird.jumpForce;
       wingSound.currentTime = 0;
-      wingSound.play().catch(()=>{});
+      wingSound.play().catch(() => {});
     } else if (state === 'gameover') {
-      // restart from gameover to menu
       state = 'menu';
       overlay.style.display = 'flex';
       overlay.querySelector('h1').textContent = '🕹️ Flappy Bird';
@@ -349,7 +345,7 @@ crossorigin="anonymous"></script>
     }
   }
 
-  // Start game
+  // Start
   function startGame() {
     overlay.style.display = 'none';
     state = 'playing';
@@ -360,27 +356,24 @@ crossorigin="anonymous"></script>
 
   // Fullscreen
   fsBtn.addEventListener('click', () => {
-    if (!document.fullscreenElement) {
-      wrapper.requestFullscreen?.();
-    } else {
-      document.exitFullscreen?.();
-    }
+    if (!document.fullscreenElement) wrapper.requestFullscreen?.();
+    else document.exitFullscreen?.();
   });
 
-  // Music play/pause (usa bgMusic já no HTML)
+  // Music
   let musicPlaying = false;
   musicBtn.addEventListener('click', () => {
     if (musicPlaying) {
       bgMusic.pause();
       musicBtn.textContent = '🎵 Música';
     } else {
-      bgMusic.play().catch(()=>{});
+      bgMusic.play().catch(() => {});
       musicBtn.textContent = '🔇 Mudo';
     }
     musicPlaying = !musicPlaying;
   });
 
-  // Pause toggle (tecla P)
+  // Pause
   function togglePause() {
     if (state === 'playing') {
       state = 'paused';
@@ -393,68 +386,66 @@ crossorigin="anonymous"></script>
     }
   }
 
-  // Collision detection
+  // Colisão
   function checkCollision(pipe) {
-    // bird is circle; pipes are rectangles
     const bx = bird.x;
     const by = bird.y;
     const r = bird.radius;
-    // top pipe rect: x->x+width, y->0..pipe.top
+
     if (bx + r > pipe.x && bx - r < pipe.x + pipe.width) {
-      if (by - r < pipe.top || by + r > pipe.bottom) {
-        return true;
-      }
+      if (by - r < pipe.top || by + r > pipe.bottom) return true;
     }
-    // ground/ceiling
+
     const h = canvas.height / (window.devicePixelRatio || 1);
     if (by + r >= h || by - r <= 0) return true;
+
     return false;
   }
 
-  // Game loop
+  // LOOP
   function loop(timestamp) {
     if (state !== 'playing') return;
-    const dt = Math.min(40, timestamp - lastTime); // clamp delta
+    const dt = Math.min(40, timestamp - lastTime);
     lastTime = timestamp;
 
-    // Physics
-    bird.vel += bird.gravity * (dt / 16.666); // scale by frame delta
+    // Atualizar ciclo de dia/noite
+    timeCycle += cycleSpeed * dt;
+    if (timeCycle > 1) timeCycle = 0;
+
+    // Física do pássaro
+    bird.vel += bird.gravity * (dt / 16.666);
     bird.y += bird.vel * (dt / 16.666);
     bird.rotation = Math.max(-0.6, Math.min(1.2, bird.vel / 12));
 
-    // Spawn pipes
+    // Pipes
     spawnTimer += dt;
-    if (spawnTimer > pipeSpacing / (1 + (pipeSpeed - 2.6) * 200)) {
+    if (spawnTimer > pipeSpacing) {
       createPipe();
       spawnTimer = 0;
     }
 
-    // Move pipes
     for (let i = pipes.length - 1; i >= 0; i--) {
       const p = pipes[i];
       p.x -= pipeSpeed * (dt / 16.666);
-      // scoring
+
       if (!p.passed && p.x + p.width < bird.x) {
         p.passed = true;
-        score += 1;
+        score++;
         scoreEl.textContent = score;
         pointSound.currentTime = 0;
-        pointSound.play().catch(()=>{});
+        pointSound.play().catch(() => {});
         if (score > highscore) {
           highscore = score;
           localStorage.setItem(STORAGE_KEY, String(highscore));
           updateHighscoreDisplay();
         }
       }
-      // remove offscreen
-      if (p.x + p.width < -50) {
-        pipes.splice(i, 1);
-      }
-      // collision
+
+      if (p.x + p.width < -50) pipes.splice(i, 1);
+
       if (checkCollision(p)) {
-        // hit!
         hitSound.currentTime = 0;
-        hitSound.play().catch(()=>{});
+        hitSound.play().catch(() => {});
         state = 'gameover';
         overlay.style.display = 'flex';
         overlay.querySelector('h1').textContent = '💥 Game Over';
@@ -463,168 +454,129 @@ crossorigin="anonymous"></script>
       }
     }
 
-    // ground collision (if out of bounds)
     const h = canvas.height / (window.devicePixelRatio || 1);
     if (bird.y + bird.radius >= h) {
-      // ensure show game over
       hitSound.currentTime = 0;
-      hitSound.play().catch(()=>{});
+      hitSound.play().catch(() => {});
       state = 'gameover';
       overlay.style.display = 'flex';
       overlay.querySelector('h1').textContent = '💥 Game Over';
       startBtn.textContent = '▶ Jogar Novamente';
     }
 
-    // Draw
     draw();
-
-    // next frame
-    if (state === 'playing') {
-      requestAnimationFrame(loop);
-    }
+    if (state === 'playing') requestAnimationFrame(loop);
   }
 
-  // Draw everything
+  // FUNDO DIA/NOITE
+  function drawBackground(w, h) {
+    let sky;
+
+    if (timeCycle < 1.00) sky = ctx.createLinearGradient(0, 0, 0, h), sky.addColorStop(0, "#87CEFA"), sky.addColorStop(1, "#E0F6FF"); // dia
+    else if (timeCycle < 1.5) sky = ctx.createLinearGradient(0, 0, 0, h), sky.addColorStop(0, "#FFA64D"), sky.addColorStop(1, "#FFD1A3"); // tarde
+    else if (timeCycle < 1.75) sky = ctx.createLinearGradient(0, 0, 0, h), sky.addColorStop(0, "#0A0A3A"), sky.addColorStop(1, "#1A1A4D"); // noite
+    else sky = ctx.createLinearGradient(0, 0, 0, h), sky.addColorStop(0, "#5B86E5"), sky.addColorStop(1, "#C8D8FF"); // amanhecer
+
+    ctx.fillStyle = sky;
+    ctx.fillRect(0, 0, w, h);
+  }
+
+  // DRAW
   function draw() {
     const w = canvas.width / (window.devicePixelRatio || 1);
     const h = canvas.height / (window.devicePixelRatio || 1);
 
-    // clear
-    ctx.clearRect(0, 0, w, h);
+    // fundo novo
+    drawBackground(w, h);
 
-    // background (subtle)
-    ctx.fillStyle = '#000';
-    ctx.fillRect(0, 0, w, h);
-
-    // ground (faint line)
-    ctx.fillStyle = '#111';
+    // chão
+    ctx.fillStyle = '#222';
     ctx.fillRect(0, h - 48, w, 48);
 
     // pipes
     for (let p of pipes) {
-      // top pipe
       ctx.fillStyle = '#2ecc71';
       ctx.fillRect(p.x, 0, p.width, p.top);
-      // bottom pipe
       ctx.fillRect(p.x, p.bottom, p.width, h - p.bottom - 48);
-      // pipe rim (darker)
       ctx.fillStyle = '#1e8449';
       ctx.fillRect(p.x, p.top - 10, p.width, 10);
       ctx.fillRect(p.x, p.bottom, p.width, 10);
     }
 
-    // bird (circle with eye)
+    // bird
     ctx.save();
     ctx.translate(bird.x, bird.y);
     ctx.rotate(bird.rotation);
-    // body
     ctx.fillStyle = '#ffd54f';
     ctx.beginPath();
     ctx.arc(0, 0, bird.radius, 0, Math.PI * 2);
     ctx.fill();
-    // wing (simple)
     ctx.fillStyle = '#ffb300';
     ctx.fillRect(-6, 2, 12, 4);
-    // eye
     ctx.fillStyle = '#000';
     ctx.beginPath();
     ctx.arc(6, -3, 2.5, 0, Math.PI * 2);
     ctx.fill();
     ctx.restore();
-
-    // score (big center top)
-    ctx.font = 'bold 28px Arial';
-    ctx.textAlign = 'center';
-    ctx.fillStyle = '#0ff';
-    ctx.fillText(score, w / 2, 40);
-
-    // show highscore small
-    ctx.font = '14px Arial';
-    ctx.fillStyle = '#aaa';
-    ctx.fillText('Recorde: ' + highscore, w - 80, 26);
   }
 
-  // Input handlers
+  // Input
   window.addEventListener('keydown', (e) => {
     if (e.code === 'Space' || e.code === 'ArrowUp') {
       e.preventDefault();
       jump();
-    } else if (e.code === 'KeyP') {
-      togglePause();
-    } else if (e.code === 'KeyM') {
-      // M toggles music
-      musicBtn.click();
-    }
+    } else if (e.code === 'KeyP') togglePause();
+    else if (e.code === 'KeyM') musicBtn.click();
   });
 
-  // Mouse / touch
   window.addEventListener('mousedown', (e) => {
-    // ignore clicks on buttons (header)
-    const target = e.target;
-    if (target && (target.tagName === 'BUTTON' || target.closest('button'))) return;
+    if (e.target.tagName === 'BUTTON' || e.target.closest('button')) return;
     jump();
   });
+
   window.addEventListener('touchstart', (e) => {
-    const target = e.target;
-    if (target && (target.tagName === 'BUTTON' || target.closest('button'))) return;
+    if (e.target.tagName === 'BUTTON' || e.target.closest('button')) return;
     jump();
-  }, {passive: true});
+  }, { passive: true });
 
-  // Start button in overlay
   startBtn.addEventListener('click', () => {
-    if (state === 'menu' || state === 'gameover') {
-      startGame();
-    } else if (state === 'playing') {
-      // do nothing
-    }
+    if (state === 'menu' || state === 'gameover') startGame();
   });
 
-  // Resize handling
   window.addEventListener('resize', () => {
     resizeCanvas();
     initPositioning();
     draw();
   });
 
-  // Initial setup
+  // Boot
   function boot() {
-    // set canvas size to wrapper
     resizeCanvas();
     initPositioning();
     resetGame();
-    // show overlay menu text
     overlay.style.display = 'flex';
     overlay.querySelector('h1').textContent = '🕹️ Flappy Bird';
     startBtn.textContent = '▶ Iniciar Jogo';
-    // show highscore in header
     updateHighscoreDisplay();
-    // initial draw
     draw();
   }
 
-  // Ensure the page doesn't scroll on touch while playing
-  document.body.addEventListener('touchmove', function(e) {
+  document.body.addEventListener('touchmove', (e) => {
     if (state === 'playing') e.preventDefault();
-  }, {passive: false});
+  }, { passive: false });
 
-  // Prevent context menu on long press (mobile)
-  window.addEventListener('contextmenu', (e) => {
-    e.preventDefault();
-  });
-
-  // Boot the game
+  window.addEventListener('contextmenu', (e) => e.preventDefault());
   boot();
 
-  // Expose some debug in console (optional)
   window.__flappy = {
     reset: resetGame,
     start: startGame,
     stop: () => { state = 'gameover'; },
     getState: () => state
   };
-
 })();
 
+/* --- Banner Mobile/Desktop --- */
 (function() {
   const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
   const banner = document.getElementById("adBanner");
@@ -645,5 +597,6 @@ crossorigin="anonymous"></script>
   }
 })();
 </script>
+
 </body>
 </html>
