@@ -169,211 +169,59 @@
 
   <audio id="bgMusic" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" loop></audio>
 
-  <script>
-    // elementos
-    const canvas = document.getElementById('gameCanvas');
-    const ctx = canvas.getContext('2d');
-    const overlay = document.getElementById('overlay');
-    const startBtn = document.getElementById('startBtn');
-    const musicBtn = document.getElementById('musicBtn');
-    const fsBtn = document.getElementById('fsBtn');
-    const resetBtn = document.getElementById('resetBtn');
-    const scoreEl = document.getElementById('score');
-    const highEl = document.getElementById('highscore');
-    const bgMusic = document.getElementById('bgMusic');
+<script>
+// ==========================
+// ACESSIBILIDADE MOBILE
+// ==========================
 
-    // constantes e estado
-    const CANVAS_W = canvas.width;
-    const CANVAS_H = canvas.height;
+// Detecta se é celular/tablet
+const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
-    const player = { x: 20, y: (CANVAS_H/2) - 40, w: 10, h: 80, dy: 0, speed: 6 };
-    const ai =     { x: CANVAS_W - 30, y: (CANVAS_H/2) - 40, w: 10, h: 80, speed: 3.4 };
-    const ball =   { x: CANVAS_W/2, y: CANVAS_H/2, size: 10, dx: 5, dy: 3 };
+// Cria controles somente no mobile
+if (isMobile) {
+    console.log("Modo Mobile ativado!");
 
-    let score = 0;
+    // Aumenta área jogável e ajusta velocidade
+    player.speed = 8;
 
-    // Lê e normaliza o highscore do localStorage: trata null/""/NaN
-    (function readHighscore(){
-      const raw = localStorage.getItem('pongHighscore');
-      // console.log('raw stored:', raw);
-      const parsed = parseInt(raw, 10);
-      if (raw === null || raw === undefined || raw === '' || Number.isNaN(parsed)) {
-        window.pongHighscore = 0;
-      } else {
-        window.pongHighscore = parsed;
-        if (!Number.isFinite(window.pongHighscore) || window.pongHighscore < 0) window.pongHighscore = 0;
-      }
-    })();
+    // Cria botões na tela
+    const touchControls = document.createElement("div");
+    touchControls.style.position = "absolute";
+    touchControls.style.bottom = "10px";
+    touchControls.style.left = "0";
+    touchControls.style.width = "100%";
+    touchControls.style.display = "flex";
+    touchControls.style.justifyContent = "space-around";
+    touchControls.style.zIndex = "10";
 
-    let highscore = window.pongHighscore;
-    highEl.textContent = highscore;
-    scoreEl.textContent = score;
+    touchControls.innerHTML = `
+        <button id="btnUp" style="
+            width: 45%; height: 80px;
+            background:#0f0; color:#000; font-size:22px;
+            border-radius:12px; border:none; opacity:0.85;
+        ">⬆ Subir</button>
 
-    let running = false;
-    let rafId = null;
+        <button id="btnDown" style="
+            width: 45%; height: 80px;
+            background:#0f0; color:#000; font-size:22px;
+            border-radius:12px; border:none; opacity:0.85;
+        ">⬇ Descer</button>
+    `;
 
-    // desenho
-    function drawRect(x,y,w,h,color){ ctx.fillStyle = color; ctx.fillRect(x,y,w,h); }
-    function draw(){
-      ctx.clearRect(0,0,CANVAS_W,CANVAS_H);
-      // linha central
-      ctx.fillStyle = '#222';
-      for(let i=0;i<CANVAS_H;i+=20) ctx.fillRect((CANVAS_W/2)-1, i, 2, 12);
+    document.body.appendChild(touchControls);
 
-      drawRect(player.x, player.y, player.w, player.h, 'lime');
-      drawRect(ai.x, ai.y, ai.w, ai.h, 'red');
-      ctx.fillStyle = 'white';
-      ctx.fillRect(ball.x, ball.y, ball.size, ball.size);
-    }
+    // eventos de toque
+    const btnUp = document.getElementById("btnUp");
+    const btnDown = document.getElementById("btnDown");
 
-    function rectsOverlap(ax,ay,aw,ah, bx,by,bw,bh){
-      return ax < bx + bw && ax + aw > bx && ay < by + bh && ay + ah > by;
-    }
+    btnUp.addEventListener("touchstart", () => player.dy = -player.speed);
+    btnUp.addEventListener("touchend", () => player.dy = 0);
 
-    function paddleHit(paddle){
-      // calcula ponto de impacto relativo (-1..1)
-      const paddleCenter = paddle.y + paddle.h/2;
-      const ballCenter = ball.y + ball.size/2;
-      const relative = (ballCenter - paddleCenter) / (paddle.h/2); // -1..1
-      const clamped = Math.max(-1, Math.min(1, relative));
-      const maxBounce = 6.0;
-      ball.dy = clamped * maxBounce;
-      const speed = Math.max(4.5, Math.abs(ball.dx));
-      if (paddle === player){
-        ball.dx = Math.abs(speed);
-        ball.x = player.x + player.w; // evita colar
-      } else {
-        ball.dx = -Math.abs(speed);
-        ball.x = ai.x - ball.size;
-      }
-    }
+    btnDown.addEventListener("touchstart", () => player.dy = player.speed);
+    btnDown.addEventListener("touchend", () => player.dy = 0);
+}
 
-    function update(){
-      if (!running) return;
-
-      player.y += player.dy;
-      if (player.y < 0) player.y = 0;
-      if (player.y + player.h > CANVAS_H) player.y = CANVAS_H - player.h;
-
-      // IA
-      const aiCenter = ai.y + ai.h/2;
-      const ballCenter = ball.y + ball.size/2;
-      if (ballCenter < aiCenter - 6) ai.y -= ai.speed;
-      else if (ballCenter > aiCenter + 6) ai.y += ai.speed;
-      if (ai.y < 0) ai.y = 0;
-      if (ai.y + ai.h > CANVAS_H) ai.y = CANVAS_H - ai.h;
-
-      // move bola
-      ball.x += ball.dx;
-      ball.y += ball.dy;
-
-      // topo/baixo
-      if (ball.y <= 0){ ball.y = 0; ball.dy = -ball.dy; }
-      else if (ball.y + ball.size >= CANVAS_H){ ball.y = CANVAS_H - ball.size; ball.dy = -ball.dy; }
-
-      // colisões com raquetes (somente se bola vem na direção da raquete)
-      if (rectsOverlap(ball.x, ball.y, ball.size, ball.size, player.x, player.y, player.w, player.h) && ball.dx < 0){
-        paddleHit(player);
-      } else if (rectsOverlap(ball.x, ball.y, ball.size, ball.size, ai.x, ai.y, ai.w, ai.h) && ball.dx > 0){
-        paddleHit(ai);
-      }
-
-      // bola saiu pela esquerda -> jogador perdeu (zera score)
-      if (ball.x + ball.size < 0){
-        score = 0;
-        updateScoreDisplay();
-        resetBall();
-      }
-
-      // bola saiu pela direita -> AI errou -> jogador pontua
-      if (ball.x > CANVAS_W){
-        score += 1;
-        // atualiza highscore somente se necessário
-        if (score > highscore){
-          highscore = score;
-          localStorage.setItem('pongHighscore', String(highscore));
-        }
-        updateScoreDisplay();
-        resetBall();
-      }
-
-      draw();
-      rafId = requestAnimationFrame(update);
-    }
-
-    function updateScoreDisplay(){
-      scoreEl.textContent = score;
-      highEl.textContent = highscore;
-    }
-
-    function resetBall(){
-      ball.x = CANVAS_W/2 - ball.size/2;
-      ball.y = CANVAS_H/2 - ball.size/2;
-      ball.dx = (Math.random() > 0.5 ? 1 : -1) * 5;
-      ball.dy = (Math.random() * 4 - 2);
-    }
-
-    // controles
-    document.addEventListener('keydown', e=>{
-      if (e.key === 'ArrowUp' || e.key === 'w') player.dy = -player.speed;
-      if (e.key === 'ArrowDown' || e.key === 's') player.dy = player.speed;
-      if (e.key.toLowerCase() === 'p') togglePause();
-    });
-    document.addEventListener('keyup', e=>{
-      if (e.key === 'ArrowUp' || e.key === 'w') { if (player.dy < 0) player.dy = 0; }
-      if (e.key === 'ArrowDown' || e.key === 's') { if (player.dy > 0) player.dy = 0; }
-    });
-
-    // iniciar / pausar
-    function startGame(){
-      overlay.style.display = 'none';
-      running = true;
-      resetBall();
-      score = 0;
-      updateScoreDisplay();
-      try { bgMusic.play().catch(()=>{}); } catch(e){}
-      if (!rafId) update();
-    }
-
-    function togglePause(){
-      running = !running;
-      if (running){
-        if (!rafId) update();
-        overlay.style.display = 'none';
-        overlay.querySelector('h1').textContent = '🏓 Pong Evolution';
-      } else {
-        overlay.style.display = 'flex';
-        overlay.querySelector('h1').textContent = '⏸️ Pausado';
-      }
-    }
-
-    // botões UI
-    startBtn.addEventListener('click', ()=>{
-      overlay.querySelector('h1').textContent = '🏓 Pong Evolution';
-      startGame();
-    });
-
-    musicBtn.addEventListener('click', ()=>{
-      if (bgMusic.paused) bgMusic.play().catch(()=>{});
-      else bgMusic.pause();
-    });
-
-    fsBtn.addEventListener('click', ()=>{
-      if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(()=>{});
-      else document.exitFullscreen();
-    });
-
-    resetBtn.addEventListener('click', ()=>{
-      localStorage.removeItem('pongHighscore');
-      highscore = 0;
-      localStorage.setItem('pongHighscore', '0');
-      updateScoreDisplay();
-      alert('Recorde zerado.');
-    });
-
-    // inicializa display e bola
-    updateScoreDisplay();
-    resetBall();
-  </script>
+// PCs usam teclado normalmente
+</script>
 </body>
 </html>
