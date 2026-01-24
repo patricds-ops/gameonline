@@ -7,28 +7,28 @@
 
   <title>Termos de Uso — GameOnline</title>
   <meta name="description" content="Termos de Uso do site GameOnline. Regras de utilização, responsabilidade, direitos autorais e política de anúncios.">
-  <link rel="canonical" href="http://localhost/GamesOnLine/termos.html">
+  
+  <link rel="canonical" href="https://www.gameonline.com.br/termos.html">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="image/favicon-32x32.png">
 
   <!-- Minimal CSS (mesmo visual do site) -->
   <style>
-    :root{--accent:#ff3b3b;--bg:#0f1720;--card:#0b1220;--muted:#94a3b8}
+    :root{--accent:#ff3b3b;--muted:#94a3b8}
     *{box-sizing:border-box}
-    html,body{height:100%;margin:0;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background:linear-gradient(180deg,#071017 0%,#071c28 100%);color:#e6eef8}
+    body{margin:0;font-family:system-ui,Arial;background:linear-gradient(180deg,#071017,#071c28);color:#e6eef8}
     a{color:var(--accent);text-decoration:none}
-    header{display:flex;align-items:center;justify-content:space-between;padding:18px 24px;max-width:1200px;margin:0 auto}
+    header,main,footer{max-width:1200px;margin:auto;padding:18px}
+    header{display:flex;justify-content:space-between;align-items:center}
     .brand{display:flex;gap:12px;align-items:center}
     .brand img{height:44px}
-    nav .menu{display:flex;gap:16px;align-items:center}
-    .btn{background:var(--accent);color:#fff;padding:8px 12px;border-radius:8px;font-weight:600}
-    main{max-width:900px;margin:22px auto;padding:0 18px}
-    .card{background:linear-gradient(180deg,rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.03);padding:24px;border-radius:12px}
-    h1,h2{color:#fff}
-    p,li{color:#d9e6f2}
-    footer{max-width:1200px;margin:24px auto;padding:18px;color:var(--muted);font-size:14px}
-    @media(max-width:980px){nav .menu{display:none}}
-    @media(max-width:640px){.brand img{height:36px}}
-    .muted{color:var(--muted)}
-    .small{font-size:13px}
+    nav .menu{display:flex;gap:16px;flex-wrap:wrap}
+    .card{background:rgba(255,255,255,0.03);padding:18px;border-radius:12px;margin-bottom:18px}
+    .hero{display:grid;grid-template-columns:1fr 360px;gap:18px}
+    .article-card{display:flex;gap:12px;margin-bottom:12px}
+    .article-card img{width:120px;height:72px;object-fit:cover;border-radius:8px}
+    footer{color:var(--muted);font-size:14px}
+    @media(max-width:900px){.hero{grid-template-columns:1fr}nav .menu{display:none}}
   </style>
 
   <!-- Structured data (Organization minimal) -->
@@ -60,11 +60,11 @@
     <nav aria-label="Navegação principal">
       <div class="menu">
         <a href="index.html">Home</a>
-        <a href="noticias.html">Notícias</a>
-        <a href="guias.html">Guias</a>
-        <a href="xampp/htdocs/GameOnline/jogos.html">Jogos</a>
-        <a href="contato.html">Contato</a>
-        <a class="btn" href="newsletter.html">Assine</a>
+      <a href="jogos.html">Jogos</a>
+      <a href="historias.html">Histórias</a>
+      <a href="dicas.html">Dicas</a>
+      <a href="noticias.html">Notícias</a>
+      <a href="contato.html">Contato</a>
       </div>
     </nav>
   </header>
@@ -125,7 +125,7 @@
       <p>Se tiver dúvidas sobre estes Termos, entre em contato:</p>
       <ul>
         <li>Visite: <a href="contato.html">/contato</a></li>
-        <li>E-mail: <a href="mailto:suporte@gameonline.com.br">suporte@gameonline.com.br</a></li>
+        <li>E-mail: <a href="mailto:suporte@gameonline.com.br">portalgameonline@gmail.com</a></li>
       </ul>
 
       <p class="muted small" style="margin-top:20px">Data da última revisão: 08/12/2025</p>
@@ -139,7 +139,9 @@
         <div style="color:var(--muted)">© 2025 GameOnline — Todos os direitos reservados</div>
       </div>
       <div style="color:var(--muted)">
-        <a href="politica.html">Política de Privacidade</a> • <a>Termos</a> • <a href="contato.html">Contato</a>
+        <a href="politica.html">Política de Privacidade</a> • 
+        <a>Termos</a> • 
+        <a href="contato.html">Contato</a>
       </div>
     </div>
   </footer>
