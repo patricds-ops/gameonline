@@ -2,44 +2,41 @@
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8">
-  <title>Histórias dos Jogos — GameOnline</title>
-  <meta name="description" content="Descubra a história dos jogos mais famosos do mundo. Como surgiram, quem criou e curiosidades que marcaram gerações.">
   <meta name="viewport" content="width=device-width,initial-scale=1">
 
+  <title>Notícias Gamer — Novidades e Atualizações | GameOnline</title>
+  <meta name="description" content="Confira as últimas notícias gamer: lançamentos, atualizações, tendências e novidades do mundo dos jogos.">
+
+  <link rel="canonical" href="https://www.gameonline.com.br/noticias.html">
+
   <style>
-    :root{--accent:#22c55e;--card:#0b1220;--muted:#94a3b8}
-    body{
-      margin:0;
-      font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
-      background:linear-gradient(180deg,#071017,#071c28);
-      color:#e6eef8;
-    }
+    :root{--accent:#ff3b3b;--muted:#94a3b8}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,Arial;background:#071017;color:#e6eef8}
     a{color:var(--accent);text-decoration:none}
     header,main,footer{max-width:1200px;margin:auto;padding:18px}
-    header{display:flex;justify-content:space-between;align-items:center}
-    .menu{display:flex;gap:16px;flex-wrap:wrap}
-    .card{
-      background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.01));
-      border:1px solid rgba(255,255,255,.05);
-      border-radius:12px;
-      padding:18px;
-      margin-bottom:18px;
-    }
-    h1,h2{margin-top:0}
-    p{line-height:1.6}
-    footer{font-size:14px;color:var(--muted)}
+    header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap}
+    nav a{margin-right:12px}
+    .card{background:rgba(255,255,255,0.03);padding:18px;border-radius:12px;margin-bottom:18px}
+    .news{display:grid;gap:18px}
+    .news article{border-bottom:1px solid rgba(255,255,255,0.05);padding-bottom:12px}
+    .meta{font-size:13px;color:var(--muted)}
   </style>
 </head>
 
 <body>
 
 <header>
-  <strong>🎮 GameOnline</strong>
-  <nav class="menu">
+  <div>
+    <strong>GameOnline</strong>
+    <div style="font-size:12px;color:var(--muted)">Portal de Games</div>
+  </div>
+
+  <nav aria-label="Menu principal">
     <a href="index.html">Home</a>
     <a href="jogos.html">Jogos</a>
-    <a href="dicas.html">Dicas</a>
     <a href="historias.html">Histórias</a>
+    <a href="dicas.html">Dicas</a>
     <a href="noticias.html">Notícias</a>
     <a href="contato.html">Contato</a>
   </nav>
@@ -47,67 +44,56 @@
 
 <main>
 
-  <article class="card">
-    <h1>Histórias dos Jogos</h1>
-    <p style="color:var(--muted)">
-      Conheça a origem dos jogos que marcaram gerações. Descubra como surgiram,
-      quem criou e como evoluíram ao longo do tempo.
+<section class="card">
+  <h1>📰 Notícias Gamer</h1>
+  <p style="color:var(--muted)">
+    Fique por dentro das principais novidades do universo gamer:
+    lançamentos, tendências, atualizações e acontecimentos importantes.
+  </p>
+</section>
+
+<section class="card news">
+
+  <article>
+    <h2><a href="#">Jogos retrô voltam a ganhar destaque em 2026</a></h2>
+    <div class="meta">Publicado em 20 de janeiro de 2026</div>
+    <p>
+      Clássicos dos anos 80 e 90 continuam conquistando novos jogadores.
+      A nostalgia aliada à simplicidade impulsiona o retorno dos jogos retrô.
     </p>
   </article>
 
-  <article class="card">
-    <h2>🕹️ A história do Tetris</h2>
+  <article>
+    <h2><a href="#">Jogos leves crescem entre jogadores casuais</a></h2>
+    <div class="meta">Publicado em 18 de janeiro de 2026</div>
     <p>
-      Tetris foi criado em 1984 pelo programador russo Alexey Pajitnov.
-      O jogo surgiu de forma simples, inspirado em quebra-cabeças geométricos,
-      e acabou se tornando um dos jogos mais populares da história.
-    </p>
-    <p>
-      Seu sucesso atravessou décadas e plataformas, sendo um dos poucos jogos
-      reconhecidos até por quem não é gamer.
+      Jogos que rodam em navegadores e PCs simples ganham espaço,
+      mostrando que diversão não depende apenas de gráficos avançados.
     </p>
   </article>
 
-  <article class="card">
-    <h2>🐍 Como surgiu o Snake</h2>
+  <article>
+    <h2><a href="#">Comunidades online fortalecem jogos independentes</a></h2>
+    <div class="meta">Publicado em 15 de janeiro de 2026</div>
     <p>
-      O Snake ganhou fama mundial ao vir instalado em celulares da Nokia no final
-      dos anos 1990. Apesar de simples, o jogo se tornou um fenômeno global.
-    </p>
-    <p>
-      A mecânica fácil de aprender e difícil de dominar fez com que o Snake
-      continuasse popular até hoje, inclusive em versões para navegador.
+      Desenvolvedores independentes encontram nas comunidades online
+      uma forma eficaz de divulgar jogos criativos e acessíveis.
     </p>
   </article>
 
-  <article class="card">
-    <h2>👾 O nascimento dos jogos de navegador</h2>
-    <p>
-      Os jogos de navegador surgiram com a popularização da internet e do Flash.
-      Eles permitiram que qualquer pessoa jogasse sem precisar instalar nada.
-    </p>
-    <p>
-      Atualmente, com HTML5 e JavaScript, os jogos online continuam vivos,
-      rodando direto no navegador de forma rápida e leve.
-    </p>
-  </article>
-
-  <article class="card">
-    <h2>📌 Por que contar a história dos jogos?</h2>
-    <p>
-      Entender a origem dos jogos ajuda a valorizar sua evolução, além de
-      preservar a memória da cultura gamer. Muitas ideias modernas nasceram
-      de projetos simples do passado.
-    </p>
-  </article>
+</section>
 
 </main>
 
 <footer>
-  © 2025 GameOnline —
-  <a href="politica.html">Política de Privacidade</a> •
-  <a href="termos.html">Termos</a> •
-  <a href="contato.html">Contato</a>
+  <div style="display:flex;justify-content:space-between;flex-wrap:wrap">
+    <div>© 2026 GameOnline</div>
+    <div>
+      <a href="politica.html">Política de Privacidade</a> •
+      <a href="termos.html">Termos</a> •
+      <a href="contato.html">Contato</a>
+    </div>
+  </div>
 </footer>
 
 </body>
