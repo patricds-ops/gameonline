@@ -4,76 +4,112 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
 
-  <title>Notícias Gamer — Lançamentos, atualizações e novidades | GameOnline</title>
-  <meta name="description" content="Fique por dentro das principais notícias do mundo gamer: lançamentos, atualizações, eventos e novidades dos jogos clássicos aos atuais.">
+  <title>Notícias Gamer | GameOnline</title>
+  <meta name="description" content="Últimas notícias do mundo gamer: lançamentos, atualizações e novidades dos jogos.">
 
   <link rel="canonical" href="https://www.gameonline.com.br/noticias.html">
 
+  <link rel="icon" type="image/png" sizes="32x32" href="image/favicon-32x32.png">
+
   <style>
     :root{--accent:#ff3b3b;--muted:#94a3b8}
-    body{margin:0;font-family:system-ui,Arial;background:#071017;color:#e6eef8}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,Arial;background:linear-gradient(180deg,#071017,#071c28);color:#e6eef8}
     a{color:var(--accent);text-decoration:none}
     header,main,footer{max-width:1200px;margin:auto;padding:18px}
+    header{display:flex;justify-content:space-between;align-items:center}
+    .brand{display:flex;gap:12px;align-items:center}
+    .brand img{height:44px}
+    nav .menu{display:flex;gap:16px;flex-wrap:wrap}
     .card{background:rgba(255,255,255,0.03);padding:18px;border-radius:12px;margin-bottom:18px}
-    .news{display:grid;gap:18px}
-    .news article{border-bottom:1px solid rgba(255,255,255,0.05);padding-bottom:12px}
-    .news h2{margin-bottom:6px}
-    .meta{font-size:13px;color:var(--muted)}
+    .hero{display:grid;grid-template-columns:1fr 360px;gap:18px}
+    .article-card{display:flex;gap:12px;margin-bottom:12px}
+    .article-card img{width:120px;height:72px;object-fit:cover;border-radius:8px}
+    footer{color:var(--muted);font-size:14px}
+    @media(max-width:900px){.hero{grid-template-columns:1fr}nav .menu{display:none}}
   </style>
 </head>
 
 <body>
+<a class="skip" href="#main">Ir para o conteúdo principal</a>
 
-<header>
-  <h1>📰 Notícias Gamer</h1>
-  <p style="color:var(--muted)">
-    Acompanhe as principais novidades do mundo dos jogos: lançamentos,
-    atualizações, eventos e curiosidades do universo gamer.
-  </p>
+<header role="banner">
+  <div class="brand">
+    <img src="image/image.png" alt="GameOnline">
+    <div>
+      <strong>GameOnline</strong>
+      <div style="font-size:12px;color:var(--muted)">
+        Notícias, guias e jogos leves no navegador
+      </div>
+    </div>
+  </div>
+
+  <nav aria-label="Navegação principal">
+    <div class="menu">
+      <a href="index.html">Home</a>
+      <a href="jogos.html">Jogos</a>
+      <a href="historias.html">Histórias</a>
+      <a href="dicas.html">Dicas</a>
+      <a href="noticias.html">Notícias</a>
+      <a href="contato.html">Contato</a>
+    </div>
+  </nav>
 </header>
 
-<main>
-
-<section class="card news">
-
-  <article>
-    <h2><a href="#">Jogos retrô voltam a ganhar destaque em 2025</a></h2>
-    <div class="meta">Publicado em 20 de janeiro de 2026</div>
-    <p>
-      Clássicos dos anos 80 e 90 continuam conquistando novos jogadores.
-      Plataformas modernas e navegadores têm impulsionado o retorno dos
-      jogos retrô com visual simples e jogabilidade viciante.
+<main id="main">
+  <section class="card">
+    <h1>📰 Notícias Gamer</h1>
+    <p style="color:var(--muted)">
+      Lançamentos, tendências, atualizações e curiosidades do universo dos jogos.
     </p>
-  </article>
+  </section>
 
-  <article>
-    <h2><a href="#">Jogos leves se tornam tendência entre jogadores casuais</a></h2>
-    <div class="meta">Publicado em 18 de janeiro de 2026</div>
-    <p>
-      Com o aumento do uso de notebooks simples e celulares,
-      jogos leves e acessíveis ganham espaço, provando que diversão
-      não depende de gráficos avançados.
-    </p>
-  </article>
+  <section class="card">
 
-  <article>
-    <h2><a href="#">Comunidades online impulsionam jogos independentes</a></h2>
-    <div class="meta">Publicado em 15 de janeiro de 2026</div>
-    <p>
-      Desenvolvedores independentes têm encontrado nas comunidades online
-      um forte apoio para divulgar jogos criativos, simples e inovadores,
-      especialmente os que rodam direto no navegador.
-    </p>
-  </article>
+    <article style="margin-bottom:16px">
+      <h2><a href="#">Jogos retrô voltam a ganhar destaque em 2025</a></h2>
+      <div style="color:var(--muted);font-size:13px">20 de janeiro de 2026</div>
+      <p>
+        Clássicos dos anos 80 e 90 continuam conquistando novos jogadores,
+        impulsionados por navegadores modernos e plataformas acessíveis.
+      </p>
+    </article>
 
-</section>
+    <article style="margin-bottom:16px">
+      <h2><a href="#">Jogos leves se tornam tendência entre jogadores casuais</a></h2>
+      <div style="color:var(--muted);font-size:13px">18 de janeiro de 2026</div>
+      <p>
+        Jogos simples e acessíveis crescem com o aumento do uso de notebooks
+        e celulares mais modestos.
+      </p>
+    </article>
 
+    <article>
+      <h2><a href="#">Comunidades online fortalecem jogos independentes</a></h2>
+      <div style="color:var(--muted);font-size:13px">15 de janeiro de 2026</div>
+      <p>
+        Desenvolvedores independentes encontram nas comunidades gamer
+        um forte apoio para divulgar projetos criativos.
+      </p>
+    </article>
+
+  </section>
 </main>
 
 <footer>
-  <p style="color:var(--muted)">
-    © 2025 GameOnline — Informação gamer com responsabilidade.
-  </p>
+  <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap">
+    <div>
+      <strong>GameOnline</strong>
+      <div style="color:var(--muted)">
+        © 2025 GameOnline — Todos os direitos reservados
+      </div>
+    </div>
+    <div style="color:var(--muted)">
+      <a href="politica.html">Política de Privacidade</a> •
+      <a href="termos.html">Termos</a> •
+      <a href="contato.html">Contato</a>
+    </div>
+  </div>
 </footer>
 
 </body>
