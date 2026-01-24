@@ -3,112 +3,157 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-  <title>Política de Privacidade — GameOnline</title>
-  <meta name="description" content="Política de Privacidade do site GameOnline. Saiba como coletamos, utilizamos e protegemos suas informações.">
+  <title>Política de Privacidade | GameOnline</title>
+  <meta name="description" content="Política de Privacidade do GameOnline. Saiba como tratamos dados, cookies e informações dos visitantes.">
 
-  <link rel="canonical" href="https://www.gameonline.com.br/politica-de-privacidade">
+  <link rel="canonical" href="https://www.gameonline.com.br/politica.html">
 
-  <style>
-    :root{--accent:#ff3b3b;--bg:#0f1720;--card:#0b1220;--muted:#94a3b8}
+  <link rel="icon" type="image/png" sizes="32x32" href="image/favicon-32x32.png">
+
+
+<style>
+    :root{--accent:#ff3b3b;--muted:#94a3b8}
     *{box-sizing:border-box}
-    html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial;background:linear-gradient(180deg,#071017 0%,#071c28 100%);color:#e6eef8}
+    body{margin:0;font-family:system-ui,Arial;background:linear-gradient(180deg,#071017,#071c28);color:#e6eef8}
     a{color:var(--accent);text-decoration:none}
-    header{display:flex;align-items:center;justify-content:space-between;padding:18px 24px;max-width:1200px;margin:0 auto}
+    header,main,footer{max-width:1200px;margin:auto;padding:18px}
+    header{display:flex;justify-content:space-between;align-items:center}
     .brand{display:flex;gap:12px;align-items:center}
     .brand img{height:44px}
-    nav .menu{display:flex;gap:16px;align-items:center}
-    .btn{background:var(--accent);color:#fff;padding:8px 12px;border-radius:8px;font-weight:600}
-    main{max-width:900px;margin:22px auto;padding:0 18px}
-    .card{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.03);padding:24px;border-radius:12px}
-    footer{max-width:1200px;margin:24px auto;padding:18px;color:var(--muted);font-size:14px}
-    @media(max-width:980px){nav .menu{display:none}}
-    @media(max-width:640px){.brand img{height:36px}}
+    nav .menu{display:flex;gap:16px;flex-wrap:wrap}
+    .card{background:rgba(255,255,255,0.03);padding:18px;border-radius:12px;margin-bottom:18px}
+    .hero{display:grid;grid-template-columns:1fr 360px;gap:18px}
+    .article-card{display:flex;gap:12px;margin-bottom:12px}
+    .article-card img{width:120px;height:72px;object-fit:cover;border-radius:8px}
+    footer{color:var(--muted);font-size:14px}
+    @media(max-width:900px){.hero{grid-template-columns:1fr}nav .menu{display:none}}
   </style>
+  
 </head>
 
 <body>
+<a class="skip" href="#main">Ir para o conteúdo principal</a>
 
-<header>
+<header role="banner">
   <div class="brand">
-    <img src="/assets/logo-gameonline.svg" alt="GameOnline">
+    <img src="image/image.png" alt="GameOnline">
     <div>
       <strong>GameOnline</strong>
-      <div style="font-size:12px;color:var(--muted)">Notícias, guias e jogos leves</div>
+      <div style="font-size:12px;color:var(--muted)">
+        Portal de games: notícias, histórias, dicas e jogos
+      </div>
     </div>
   </div>
 
   <nav aria-label="Navegação principal">
     <div class="menu">
-      <a href="/">Home</a>
-      <a href="/noticias">Notícias</a>
-      <a href="/guias">Guias</a>
-      <a href="/jogos">Jogos</a>
-      <a href="/contato">Contato</a>
-      <a class="btn" href="/newsletter">Assine</a>
+      <a href="index.html">Home</a>
+      <a href="jogos.html">Jogos</a>
+      <a href="historias.html">Histórias</a>
+      <a href="dicas.html">Dicas</a>
+      <a href="noticias.html">Notícias</a>
+      <a href="contato.html">Contato</a>
     </div>
   </nav>
 </header>
 
-<main>
-  <article class="card">
-    <h1 style="margin-top:0">Política de Privacidade</h1>
-    <p>Esta Política de Privacidade explica como o site <strong>GameOnline</strong> coleta, usa e protege informações dos usuários. Ao utilizar nosso site, você concorda com os termos descritos abaixo.</p>
+<main id="main">
+  <section class="card">
+    <h1>🔒 Política de Privacidade</h1>
 
-    <h2>1. Informações que Coletamos</h2>
-    <p>Coletamos informações de duas maneiras:</p>
+    <p>
+      A sua privacidade é importante para nós. Esta Política de Privacidade descreve
+      como o <strong>GameOnline</strong> coleta, usa e protege as informações dos visitantes.
+    </p>
+
+    <h2>1. Coleta de informações</h2>
+    <p>
+      O GameOnline não coleta informações pessoais identificáveis de forma direta,
+      como nome, CPF ou endereço, sem o consentimento do usuário.
+    </p>
+    <p>
+      Podemos coletar informações de forma automática, como:
+    </p>
     <ul>
-      <li><strong>Informações fornecidas voluntariamente:</strong> como nome e e-mail em formulários (ex.: newsletter, contato).</li>
-      <li><strong>Informações coletadas automaticamente:</strong> como IP, tipo de navegador, páginas visitadas e tempo de navegação. Isso é feito por ferramentas como Google Analytics.</li>
+      <li>Endereço IP (anonimizado quando possível)</li>
+      <li>Tipo de navegador e dispositivo</li>
+      <li>Páginas acessadas e tempo de navegação</li>
     </ul>
 
-    <h2>2. Cookies e Tecnologias Semelhantes</h2>
-    <p>Usamos cookies para:</p>
+    <h2>2. Uso das informações</h2>
+    <p>
+      As informações coletadas são utilizadas para:
+    </p>
     <ul>
-      <li>melhorar sua experiência;</li>
-      <li>personalizar conteúdo;</li>
-      <li>analisar estatísticas de uso;</li>
-      <li>exibir anúncios personalizados através do Google AdSense.</li>
+      <li>Melhorar a experiência do usuário</li>
+      <li>Analisar estatísticas de acesso ao site</li>
+      <li>Otimizar conteúdos e desempenho</li>
     </ul>
 
-    <p>O usuário pode desativar cookies no navegador a qualquer momento.</p>
+    <h2>3. Cookies</h2>
+    <p>
+      O GameOnline pode utilizar cookies para armazenar preferências do usuário
+      e melhorar a navegação.
+    </p>
+    <p>
+      Cookies também poderão ser utilizados por serviços de terceiros,
+      como ferramentas de análise e publicidade (ex: Google).
+    </p>
 
-    <h2>3. Publicidade (Google AdSense)</h2>
-    <p>Após implementação do Google AdSense, anúncios poderão usar cookies de terceiros, como o <strong>DoubleClick</strong>, para personalizar anúncios com base em visitas anteriores.</p>
-    <p>O usuário pode desativar esse uso acessando: <a href="https://www.google.com/settings/ads">Configurações de Anúncios do Google</a>.</p>
+    <h2>4. Publicidade e terceiros</h2>
+    <p>
+      Futuramente, o site poderá exibir anúncios através de plataformas como
+      o Google AdSense, que utilizam cookies e tecnologias semelhantes.
+    </p>
+    <p>
+      Esses serviços seguem suas próprias políticas de privacidade.
+    </p>
 
-    <h2>4. Compartilhamento de Informações</h2>
-    <p>Nós <strong>não</strong> vendemos, trocamos ou compartilhamos informações pessoais com terceiros, exceto:</p>
-    <ul>
-      <li>Provedores de serviços (ex.: Analytics, hospedagem).</li>
-      <li>Cumprimento de exigências legais.</li>
-    </ul>
+    <h2>5. Links externos</h2>
+    <p>
+      O GameOnline pode conter links para sites externos.
+      Não nos responsabilizamos pelas políticas de privacidade desses sites.
+    </p>
 
-    <h2>5. Segurança dos Dados</h2>
-    <p>Implementamos medidas de segurança técnicas e organizacionais para proteger dados contra acessos não autorizados, perda ou uso indevido.</p>
+    <h2>6. Consentimento</h2>
+    <p>
+      Ao utilizar o GameOnline, você concorda com esta Política de Privacidade.
+    </p>
 
-    <h2>6. Links Externos</h2>
-    <p>Nosso site pode conter links para páginas externas. Não somos responsáveis pelo conteúdo ou políticas desses sites.</p>
+    <h2>7. Alterações nesta política</h2>
+    <p>
+      Esta política pode ser atualizada a qualquer momento, sem aviso prévio.
+      Recomendamos que o usuário revise esta página periodicamente.
+    </p>
 
-    <h2>7. Direitos do Usuário</h2>
-    <p>Você pode solicitar a exclusão, alteração ou consulta de seus dados entrando em contato através da página <a href="/contato">Contato</a>.</p>
+    <h2>8. Contato</h2>
+    <p>
+      Em caso de dúvidas sobre esta Política de Privacidade, entre em contato pelo e-mail:
+    </p>
+    <p>
+      📧 <strong>
+        <a href="mailto:contato@gameonline.com.br">
+          portalgameonline@gmail.com
+        </a>
+      </strong>
+    </p>
 
-    <h2>8. Alterações nesta Política</h2>
-    <p>Podemos atualizar esta Política periodicamente. A data da última atualização estará sempre disponível abaixo.</p>
-
-    <p style="color:var(--muted);margin-top:28px">Última atualização: Janeiro/2025</p>
-  </article>
+  </section>
 </main>
 
 <footer>
   <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap">
     <div>
       <strong>GameOnline</strong>
-      <div style="color:var(--muted)">© 2025 GameOnline — Todos os direitos reservados</div>
+      <div style="color:var(--muted)">
+        © 2025 GameOnline — Todos os direitos reservados
+      </div>
     </div>
     <div style="color:var(--muted)">
-      <a>Política de Privacidade</a> • <a href="/xampp/htdocs/GamesOnLine/termos.html">Termos</a> • <a href="/contato">Contato</a>
+      <a href="politica.html">Política de Privacidade</a> •
+      <a href="termos.html">Termos</a> •
+      <a href="contato.html">Contato</a>
     </div>
   </div>
 </footer>
